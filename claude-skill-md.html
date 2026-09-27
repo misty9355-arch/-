@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Claude에서 SKILL.md 파일로 나만의 스킬을 만드는 방법을 초보자에게 설명하는 색연필 그림 안내서">
+  <title>SKILL.md 만들기 안내서</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+  <style>
+    :root {
+      --bg: #eceaf0;
+      --paper: #f8f5f7;
+      --card: #fffdf9;
+      --card-soft: rgba(255,255,255,.62);
+      --ink: #25232a;
+      --ink-2: #4f4b55;
+      --muted: #65626b;
+      --faint: #817b85;
+      --line: #cbc6cf;
+      --dash: #aaa2ae;
+      --plum: #8f3456;
+      --blue: #355f82;
+      --ochre: #b47b19;
+      --green: #52735d;
+      --soft-plum: #eee0e6;
+      --soft-plum-ink: #5d4d56;
+      --soft-blue: #e3ebf1;
+      --soft-yellow: #f4e8c8;
+      --soft-yellow-ink: #5a4a2f;
+      --code-bg: #ece8ed;
+      --code-ink: #5d3850;
+      --frame-bg: #f1eef5;
+      --frame-line: #d3ccd7;
+      --dot-a: rgba(255,255,255,.62);
+      --dot-b: rgba(96,82,105,.05);
+      --shadow: rgba(52, 42, 55, .08);
+      --sheet-rule: rgba(53,95,130,.13);
+      --bad: #a4452f;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #1f1d23;
+        --paper: #26232b;
+        --card: #2a2730;
+        --card-soft: rgba(255,255,255,.04);
+        --ink: #eeeaf1;
+        --ink-2: #cfc9d4;
+        --muted: #aaa3b0;
+        --faint: #938c99;
+        --line: #433e4a;
+        --dash: #5e5766;
+        --plum: #e08aab;
+        --blue: #8fb6d6;
+        --ochre: #e0b25a;
+        --green: #93b89c;
+        --soft-plum: #3a2831;
+        --soft-plum-ink: #e6d2dc;
+        --soft-blue: #25313b;
+        --soft-yellow: #3a3222;
+        --soft-yellow-ink: #eadbb8;
+        --code-bg: #37323d;
+        --code-ink: #f0bcd2;
+        --frame-bg: #2c2932;
+        --frame-line: #48424f;
+        --dot-a: rgba(255,255,255,.04);
+        --dot-b: rgba(0,0,0,.18);
+        --shadow: rgba(0,0,0,.35);
+        --sheet-rule: rgba(143,182,214,.10);
+        --bad: #e5957f;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #1f1d23;
+      --paper: #26232b;
+      --card: #2a2730;
+      --card-soft: rgba(255,255,255,.04);
+      --ink: #eeeaf1;
+      --ink-2: #cfc9d4;
+      --muted: #aaa3b0;
+      --faint: #938c99;
+      --line: #433e4a;
+      --dash: #5e5766;
+      --plum: #e08aab;
+      --blue: #8fb6d6;
+      --ochre: #e0b25a;
+      --green: #93b89c;
+      --soft-plum: #3a2831;
+      --soft-plum-ink: #e6d2dc;
+      --soft-blue: #25313b;
+      --soft-yellow: #3a3222;
+      --soft-yellow-ink: #eadbb8;
+      --code-bg: #37323d;
+      --code-ink: #f0bcd2;
+      --frame-bg: #2c2932;
+      --frame-line: #48424f;
+      --dot-a: rgba(255,255,255,.04);
+      --dot-b: rgba(0,0,0,.18);
+      --shadow: rgba(0,0,0,.35);
+      --sheet-rule: rgba(143,182,214,.10);
+      --bad: #e5957f;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 20% 15%, var(--dot-a) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 76% 62%, var(--dot-b) 0 1px, transparent 1.5px),
+        var(--bg);
+      background-size: 19px 19px, 23px 23px, auto;
+      color: var(--ink);
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.85;
+      word-break: keep-all;
+    }
+
+    a:focus-visible { outline: 2px solid var(--plum); outline-offset: 2px; }
+
+    .page {
+      width: min(100% - 44px, 960px);
+      margin: 0 auto;
+      padding: 88px 0 64px;
+    }
+
+    header { padding-bottom: 70px; }
+
+    .kicker,
+    .section-label {
+      color: var(--plum);
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    .closing {
+      font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+      letter-spacing: -.045em;
+      text-wrap: balance;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 26px 0 30px;
+      font-size: clamp(47px, 7vw, 78px);
+      line-height: 1.12;
+      font-weight: 700;
+    }
+
+    h1 em,
+    h2 em,
+    .closing em { color: var(--plum); font-style: normal; }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 0;
+      color: var(--ink-2);
+      font-size: 21px;
+      line-height: 1.85;
+    }
+
+    .hero-copy strong { color: var(--ink); }
+
+    .visual { margin: 42px 0 0; }
+
+    .pencil-frame {
+      overflow: hidden;
+      background: var(--frame-bg);
+      border: 1px solid var(--frame-line);
+      border-radius: 5px;
+      box-shadow: 0 14px 38px var(--shadow);
+    }
+
+    .pencil-frame img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+
+    figcaption,
+    .caption {
+      margin-top: 12px;
+      color: var(--faint);
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .section {
+      margin-top: 96px;
+      padding-top: 78px;
+      border-top: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 18px 0 25px;
+      font-size: clamp(36px, 5.2vw, 58px);
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .section-copy {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    code {
+      padding: .13em .38em;
+      background: var(--code-bg);
+      color: var(--code-ink);
+      border-radius: 4px;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: .92em;
+      word-break: break-all;
+    }
+
+    /* 손으로 쓴 카드 */
+    .repeat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .repeat-card {
+      min-height: 155px;
+      padding: 22px;
+      background: var(--card);
+      border: 1px dashed var(--dash);
+      border-radius: 6px 4px 7px 5px;
+      transform: rotate(-.35deg);
+    }
+
+    .repeat-card:nth-child(2) { transform: rotate(.45deg); }
+    .repeat-card:nth-child(3) { transform: rotate(-.15deg); }
+    .repeat-card small { color: var(--plum); font-weight: 800; }
+    .repeat-card p { margin: 13px 0 0; color: var(--ink-2); font-size: 15px; }
+    .repeat-card ul { margin: 13px 0 0; padding-left: 1.1rem; color: var(--ink-2); font-size: 15px; }
+    .repeat-card li + li { margin-top: 6px; }
+
+    /* 폴더 라벨 */
+    .folder-labels {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .folder-label {
+      padding: 13px 10px;
+      background: var(--card-soft);
+      border-bottom: 3px solid var(--blue);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .folder-label:nth-child(2) { border-color: var(--green); }
+    .folder-label:nth-child(3) { border-color: var(--plum); }
+    .folder-label:nth-child(4) { border-color: var(--ochre); }
+
+    .folder-label span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .truth-note {
+      margin-top: 24px;
+      padding: 18px 20px;
+      background: var(--soft-yellow);
+      border-left: 4px solid var(--ochre);
+      color: var(--soft-yellow-ink);
+      font-size: 14px;
+    }
+
+    /* SKILL.md 해부도 */
+    .anatomy {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 28px;
+      margin-top: 38px;
+      align-items: start;
+    }
+
+    .sheet {
+      position: relative;
+      background:
+        repeating-linear-gradient(to bottom, transparent 0 27px, var(--sheet-rule) 27px 28px),
+        var(--card);
+      border: 1px solid var(--line);
+      border-radius: 3px 6px 4px 5px;
+      box-shadow: 0 14px 38px var(--shadow);
+      transform: rotate(-.3deg);
+    }
+
+    .sheet-tab {
+      display: inline-block;
+      margin: -1px 0 0 18px;
+      padding: 4px 12px;
+      background: var(--soft-blue);
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 5px 5px;
+      color: var(--blue);
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .sheet pre {
+      margin: 0;
+      padding: 16px 22px 24px;
+      overflow-x: auto;
+      color: var(--ink);
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 13.5px;
+      line-height: 28px;
+      white-space: pre;
+    }
+
+    .sheet .fm { display: block; margin: 0 -10px; padding: 0 10px; background: var(--soft-plum); border-radius: 4px; }
+    .sheet .k { color: var(--plum); font-weight: 800; }
+    .sheet .h { color: var(--blue); font-weight: 800; }
+    .sheet .lk { color: var(--green); text-decoration: underline; text-decoration-style: wavy; text-underline-offset: 4px; }
+    .sheet .mark {
+      display: inline-grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      margin-left: 6px;
+      border-radius: 50%;
+      background: var(--ochre);
+      color: var(--card);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1;
+      vertical-align: 1px;
+    }
+
+    .notes {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .notes li {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 12px;
+      padding: 18px 18px 18px 16px;
+      background: var(--card-soft);
+      border: 1px solid var(--line);
+    }
+
+    .notes .num {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--ochre);
+      color: var(--card);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .notes b { display: block; font-size: 16px; line-height: 1.5; }
+    .notes p { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .notes .when {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 1px 8px;
+      background: var(--soft-blue);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* 규칙 표 */
+    .rule-table-wrap {
+      margin-top: 30px;
+      overflow-x: auto;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+
+    .rule-table {
+      width: 100%;
+      min-width: 560px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .rule-table th,
+    .rule-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .rule-table tr:last-child td { border-bottom: 0; }
+    .rule-table th { color: var(--plum); font-size: 12px; letter-spacing: .08em; }
+    .rule-table td:first-child { white-space: nowrap; font-weight: 800; }
+    .rule-table td { color: var(--muted); }
+    .rule-table td strong { color: var(--ink); }
+    .req { color: var(--plum); font-size: 11px; font-weight: 800; }
+
+    /* 만드는 순서 */
+    .steps {
+      display: grid;
+      gap: 0;
+      margin: 38px 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+
+    .steps li {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 18px;
+      padding: 24px 26px;
+      counter-increment: step;
+    }
+
+    .steps li + li { border-top: 1px dashed var(--dash); }
+
+    .steps li::before {
+      content: counter(step, decimal-leading-zero);
+      color: var(--plum);
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .steps h3 { margin: 0 0 6px; font-size: 19px; line-height: 1.5; }
+    .steps p { margin: 0; color: var(--muted); font-size: 15px; }
+    .steps p + p { margin-top: 8px; }
+
+    .say {
+      display: block;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--soft-blue);
+      border-radius: 14px 14px 14px 3px;
+      color: var(--ink-2);
+      font-size: 14px;
+    }
+
+    /* 흐름 라벨 */
+    .flow-labels {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .flow-label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .flow-label span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    /* 세 칸 카드 */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 38px;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+
+    .how-card { min-height: 238px; padding: 28px 24px; }
+    .how-card + .how-card { border-left: 1px solid var(--line); }
+    .how-card b { color: var(--plum); font-size: 12px; letter-spacing: .08em; }
+    .how-card h3 { margin: 12px 0 12px; font-size: 19px; line-height: 1.5; }
+    .how-card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    /* 두 칸 카드 */
+    .good-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 36px;
+    }
+
+    .good-card {
+      padding: 28px;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+
+    .good-card h3 { margin: 0 0 14px; font-size: 20px; }
+    .good-card ul { margin: 0; padding-left: 1.2rem; color: var(--muted); }
+    .good-card li + li { margin-top: 10px; }
+
+    /* 좋은 설명 vs 아쉬운 설명 */
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .compare-card {
+      padding: 23px;
+      background: var(--card-soft);
+      border: 1px solid var(--line);
+    }
+
+    .compare-card .tag {
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .compare-card.bad .tag { color: var(--bad); }
+    .compare-card.good .tag { color: var(--green); }
+    .compare-card blockquote {
+      margin: 12px 0 10px;
+      padding: 12px 14px;
+      background: var(--card);
+      border-left: 3px solid var(--line);
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .compare-card.bad blockquote { border-color: var(--bad); }
+    .compare-card.good blockquote { border-color: var(--green); }
+    .compare-card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .boundary {
+      margin-top: 42px;
+      padding: 25px 28px;
+      background: var(--soft-plum);
+      border-left: 4px solid var(--plum);
+    }
+
+    .boundary strong { display: block; margin-bottom: 7px; }
+    .boundary p { margin: 0; color: var(--soft-plum-ink); font-size: 15px; }
+
+    .closing {
+      margin: 105px 0 66px;
+      padding: 50px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      font-size: clamp(34px, 5vw, 55px);
+      line-height: 1.28;
+      font-weight: 700;
+    }
+
+    .sources {
+      color: var(--faint);
+      font-size: 13px;
+    }
+
+    .sources h2 {
+      margin: 0 0 12px;
+      font-family: inherit;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    .sources ul { margin: 0; padding-left: 1.15rem; }
+    .sources li + li { margin-top: 5px; }
+    .sources a { color: var(--blue); }
+    .footer-note { margin-top: 26px; font-size: 10px; }
+
+    @media (max-width: 720px) {
+      body { font-size: 16px; }
+      .page { width: min(100% - 32px, 560px); padding-top: 52px; }
+      header { padding-bottom: 45px; }
+      h1 { margin-top: 20px; font-size: 40px; }
+      .hero-copy, .section-copy { font-size: 16px; }
+      .section { margin-top: 58px; padding-top: 50px; }
+      .repeat-grid, .how-grid, .good-grid, .compare, .anatomy { grid-template-columns: minmax(0, 1fr); }
+      .how-card { min-height: 0; }
+      .how-card + .how-card { border-left: 0; border-top: 1px solid var(--line); }
+      .folder-labels { grid-template-columns: repeat(2, 1fr); }
+      .flow-labels { gap: 2px; }
+      .flow-label { font-size: 10px; }
+      .flow-label span { font-size: 8px; }
+      .steps li { grid-template-columns: 1fr; gap: 4px; padding: 22px 20px; }
+      .sheet { transform: none; }
+      .sheet pre { font-size: 12.5px; padding: 14px 16px 20px; }
+      .closing { margin-top: 64px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { width: 100%; padding: 12mm; }
+      .section, .closing { break-before: auto; }
+      .pencil-frame, .repeat-grid, .how-grid, .good-grid, .compare, .anatomy, .steps, .boundary { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="kicker">Claude Skills · SKILL.md 만들기</p>
+      <h1>설명서 한 장으로<br>Claude에게 <em>내 일하는 법</em>을 알려주세요</h1>
+      <p class="hero-copy">Claude의 스킬은 <strong><code>SKILL.md</code>라는 글 파일 하나</strong>에서 시작합니다. 맨 위에 이름과 “언제 쓰는지”를 적고, 아래에 일하는 순서와 기준을 적으면 됩니다. 코딩을 몰라도 만들 수 있습니다.</p>
+      <figure class="visual">
+        <div class="pencil-frame">
+          <img src="skills-colored-pencil-hero.png" alt="사람이 업무 방법을 카드에 적어 서랍에 넣고, AI 로봇이 필요한 카드를 꺼내 일하는 색연필 그림">
+        </div>
+        <figcaption>SKILL.md를 쓰는 일은 서랍에 넣어 둘 업무 카드를 한 장 적는 일과 같습니다.</figcaption>
+      </figure>
+    </header>
+
+    <section class="section" aria-labelledby="inside-title">
+      <span class="section-label">무엇을 만드나</span>
+      <h2 id="inside-title">스킬은 폴더 하나,<br>그 안의 <em>SKILL.md</em>가 주인공입니다</h2>
+      <p class="section-copy">스킬 폴더를 만들고 그 안에 <code>SKILL.md</code>를 넣으면 가장 작은 스킬이 완성됩니다. 참고자료, 서식, 스크립트는 필요할 때만 옆에 더 둡니다. 폴더 이름은 스킬 이름과 같게 짓는 것이 좋습니다.</p>
+      <figure class="visual">
+        <div class="pencil-frame">
+          <img src="skills-colored-pencil-kit.png" alt="AI 로봇이 큰 폴더를 열어 업무 설명서, 참고 책, 서식 종이, 톱니바퀴 도구 상자를 보여주는 색연필 그림">
+        </div>
+        <div class="folder-labels" aria-label="스킬 폴더 구성">
+          <div class="folder-label">SKILL.md<span>핵심 설명서 · 필수</span></div>
+          <div class="folder-label">references/<span>긴 참고자료 · 선택</span></div>
+          <div class="folder-label">assets/<span>서식과 재료 · 선택</span></div>
+          <div class="folder-label">scripts/<span>실행할 코드 · 선택</span></div>
+        </div>
+        <figcaption>예: my-skills/eli5-guide/SKILL.md · 처음에는 SKILL.md 하나만으로 충분합니다.</figcaption>
+      </figure>
+      <aside class="truth-note"><strong>파일 이름을 정확히:</strong> 반드시 대문자 <code>SKILL.md</code>입니다. <code>skill.md</code>나 <code>Skill.md</code>로 저장하면 Claude가 스킬로 알아보지 못할 수 있습니다.</aside>
+    </section>
+
+    <section class="section" aria-labelledby="anatomy-title">
+      <span class="section-label">SKILL.md 들여다보기</span>
+      <h2 id="anatomy-title">위에는 <em>이름표</em>,<br>아래에는 일하는 방법</h2>
+      <p class="section-copy">SKILL.md는 두 부분으로 나뉩니다. <code>---</code> 두 줄 사이의 머리말(frontmatter)은 Claude가 항상 보는 이름표입니다. 그 아래 본문은 이 스킬이 골라졌을 때만 펼쳐 읽는 설명서입니다.</p>
+
+      <div class="anatomy">
+        <figure class="sheet" aria-label="SKILL.md 예시 파일">
+          <span class="sheet-tab">eli5-guide/SKILL.md</span>
+<pre><span class="fm">---<span class="mark">1</span>
+<span class="k">name:</span> eli5-guide
+<span class="k">description:</span> 어려운 기술 개념을 초보자용
+  색연필 그림 HTML 설명서로 만든다. 사용자가
+  "쉽게 설명해줘", "초보자용 자료", "ELI5"를
+  요청하거나 수업용 개념 설명 페이지가
+  필요할 때 사용한다.
+---</span>
+<span class="h"># ELI5 설명서 만들기</span><span class="mark">2</span>
+
+<span class="h">## 작업 순서</span>
+1. 공식 자료부터 확인하고 출처를 적는다.
+2. 핵심 메시지를 섹션 5~7개로 나눈다.
+3. assets/template.html 양식을 채운다.
+4. 폭 400px 화면에서 깨지지 않는지 본다.
+
+<span class="h">## 기준</span>
+- 한 섹션에는 메시지 하나만 둔다.
+- 전문 용어는 처음 나올 때 한 줄로 푼다.
+- 문체 규칙은 <span class="lk">references/style.md</span><span class="mark">3</span>를 본다.</pre>
+        </figure>
+
+        <ol class="notes" aria-label="SKILL.md 각 부분 설명">
+          <li>
+            <span class="num">1</span>
+            <div>
+              <b>머리말 · 이름표</b>
+              <p><code>name</code>과 <code>description</code> 두 줄이 핵심입니다. Claude는 이 설명을 보고 “지금 이 스킬을 꺼낼까?”를 판단합니다.</p>
+              <span class="when">항상 읽음 · 아주 짧게</span>
+            </div>
+          </li>
+          <li>
+            <span class="num">2</span>
+            <div>
+              <b>본문 · 업무 설명서</b>
+              <p>평범한 마크다운으로 순서, 기준, 예시, 확인 방법을 적습니다. 500줄 안쪽으로 짧게 유지합니다.</p>
+              <span class="when">스킬이 골라질 때 읽음</span>
+            </div>
+          </li>
+          <li>
+            <span class="num">3</span>
+            <div>
+              <b>링크한 파일 · 참고 서랍</b>
+              <p>길고 자세한 내용은 따로 두고 본문에서 경로만 알려 줍니다. 필요한 순간에만 열어 봅니다.</p>
+              <span class="when">필요할 때만 읽음</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="rule-table-wrap">
+        <table class="rule-table">
+          <thead>
+            <tr><th>항목</th><th>지켜야 할 규칙</th><th>작성 요령</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>name</code> <span class="req">필수</span></td>
+              <td><strong>영어 소문자, 숫자, 하이픈(-)만</strong> 쓰고 최대 64자입니다. “anthropic”, “claude”라는 단어는 넣을 수 없습니다.</td>
+              <td>하는 일이 보이게 짓습니다. <code>pdf-processing</code>, <code>eli5-guide</code>는 좋고 <code>helper</code>, <code>tools</code>는 너무 막연합니다.</td>
+            </tr>
+            <tr>
+              <td><code>description</code> <span class="req">필수</span></td>
+              <td>비워 둘 수 없고 <strong>최대 1,024자</strong>입니다. XML 태그는 쓸 수 없습니다.</td>
+              <td><strong>무엇을 하는지 + 언제 쓰는지</strong>를 함께 적습니다. “나는 ~할 수 있어요”가 아니라 “~한다”처럼 3인칭으로 씁니다.</td>
+            </tr>
+            <tr>
+              <td>본문</td>
+              <td>형식 제한은 없지만 <strong>500줄 이하</strong>를 권장합니다.</td>
+              <td>길어지면 <code>references/</code> 파일로 나누고, 본문에서 한 단계로 바로 연결합니다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption">Claude Code에서는 <code>disable-model-invocation</code>, <code>allowed-tools</code> 같은 선택 항목도 머리말에 더 쓸 수 있습니다.</p>
+    </section>
+
+    <section class="section" aria-labelledby="steps-title">
+      <span class="section-label">만드는 순서</span>
+      <h2 id="steps-title">다섯 단계면<br><em>첫 스킬</em>이 완성됩니다</h2>
+      <ol class="steps">
+        <li>
+          <div>
+            <h3>반복해서 하는 말을 찾습니다</h3>
+            <p>Claude에게 같은 규칙을 세 번째 설명하고 있다면 스킬로 만들 때입니다. 먼저 스킬 없이 한 번 일을 끝까지 해 보고, 그때 덧붙인 설명을 모아 둡니다.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>폴더를 만들고 SKILL.md를 엽니다</h3>
+            <p>스킬 이름으로 폴더를 만들고 그 안에 <code>SKILL.md</code>를 새로 만듭니다. 메모장이나 VS Code 같은 아무 텍스트 편집기면 됩니다.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>머리말에 이름과 설명을 씁니다</h3>
+            <p>맨 위에 <code>---</code>를 쓰고 <code>name:</code>, <code>description:</code>을 적은 뒤 다시 <code>---</code>로 닫습니다. 설명에는 사용자가 실제로 쓸 요청 표현을 넣습니다.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>본문에 순서와 기준을 씁니다</h3>
+            <p>1단계에서 모은 규칙을 “작업 순서”, “기준”, “마지막 확인”처럼 나눠 적습니다. Claude가 이미 아는 일반 상식은 빼고, 이 일에만 필요한 내용만 남깁니다.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>실제 요청으로 시험하고 다듬습니다</h3>
+            <p>새 대화에서 평소처럼 부탁해 보고, 스킬이 잘 불리는지와 결과가 기준에 맞는지 봅니다. 빠뜨린 점이 보이면 SKILL.md를 고쳐 다시 시험합니다.</p>
+            <span class="say">직접 쓰기 어렵다면 이렇게 부탁해도 됩니다. “방금 우리가 한 작업 방식을 SKILL.md 스킬로 만들어줘.”</span>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section" aria-labelledby="where-title">
+      <span class="section-label">어디에 넣나</span>
+      <h2 id="where-title">쓰는 곳에 따라<br><em>넣는 자리</em>가 다릅니다</h2>
+      <div class="how-grid">
+        <article class="how-card">
+          <b>Claude 앱 · 웹</b>
+          <h3>ZIP으로 묶어 업로드합니다</h3>
+          <p>스킬 폴더를 ZIP 파일로 압축한 뒤 설정의 <strong>Customize › Skills</strong>에서 <strong>+ › Create skill › Upload a skill</strong>을 고릅니다.<br><br><strong>Settings › Capabilities</strong>에서 “Code execution and file creation”이 켜져 있어야 합니다.</p>
+        </article>
+        <article class="how-card">
+          <b>Claude Code · 나만 쓰기</b>
+          <h3>내 컴퓨터 전체에서 씁니다</h3>
+          <p>홈 폴더 아래에 둡니다.<br><br><code>~/.claude/skills/스킬이름/SKILL.md</code><br><br>어느 프로젝트를 열어도 이 스킬을 쓸 수 있습니다.</p>
+        </article>
+        <article class="how-card">
+          <b>Claude Code · 팀과 함께</b>
+          <h3>프로젝트 폴더에 둡니다</h3>
+          <p>저장소 안에 둡니다.<br><br><code>.claude/skills/스킬이름/SKILL.md</code><br><br>Git에 함께 올리면 같은 저장소를 쓰는 팀원도 같은 스킬을 씁니다.</p>
+        </article>
+      </div>
+      <p class="caption">앱에서 만든 개인 스킬은 공유하거나 관리자가 배포하기 전까지 동료에게 보이지 않습니다.</p>
+    </section>
+
+    <section class="section" aria-labelledby="flow-title">
+      <span class="section-label">어떻게 작동하나</span>
+      <h2 id="flow-title">이름표만 훑어보고,<br>맞는 스킬만 <em>펼쳐 읽습니다</em></h2>
+      <p class="section-copy">Claude는 처음부터 모든 스킬의 본문을 읽지 않습니다. 대화가 시작되면 각 스킬의 <code>name</code>과 <code>description</code>만 알고 있다가, 요청과 맞는 스킬을 골랐을 때 그 SKILL.md 본문을 읽고 필요한 파일을 더 엽니다.</p>
+      <figure class="visual">
+        <div class="pencil-frame">
+          <img src="skills-colored-pencil-flow.png" alt="사용자가 부탁하면 AI 로봇이 여러 카드의 짧은 소개를 살펴보고 알맞은 카드 하나만 펼쳐 읽은 뒤 컴퓨터로 일하는 색연필 그림">
+        </div>
+        <div class="flow-labels" aria-label="스킬이 선택되어 실행되는 순서">
+          <div class="flow-label">사용자 요청<span>하고 싶은 일</span></div>
+          <div class="flow-label">이름표 확인<span>description 비교</span></div>
+          <div class="flow-label">SKILL.md 펼치기<span>본문 읽기</span></div>
+          <div class="flow-label">필요한 파일만<span>references · scripts</span></div>
+        </div>
+        <figcaption>이름표가 흐릿하면 알맞은 스킬이 있어도 꺼내지지 않습니다. 그래서 description이 가장 중요합니다.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="use-title">
+      <span class="section-label">어떻게 부르나</span>
+      <h2 id="use-title">알아서 부르게 두거나,<br><em>이름으로 직접</em> 부릅니다</h2>
+      <div class="how-grid">
+        <article class="how-card">
+          <b>자동 선택</b>
+          <h3>평소처럼 부탁합니다</h3>
+          <p>요청이 description과 잘 맞으면 Claude가 스스로 스킬을 꺼내 씁니다.<br><br>예: “MCP를 초보자용 그림 설명서로 만들어줘.”</p>
+        </article>
+        <article class="how-card">
+          <b>직접 지목 · Claude Code</b>
+          <h3><code>/스킬이름</code>으로 부릅니다</h3>
+          <p>스킬 이름은 곧 슬래시 명령이 됩니다. 뒤에 붙인 말은 본문의 <code>$ARGUMENTS</code> 자리에 들어갑니다.<br><br>예: <code>/eli5-guide 스킬이란?</code></p>
+        </article>
+        <article class="how-card">
+          <b>자동 호출 막기</b>
+          <h3>내가 부를 때만 쓰게 합니다</h3>
+          <p>배포처럼 함부로 실행되면 곤란한 일은 머리말에 한 줄을 더합니다.<br><br><code>disable-model-invocation: true</code><br><br>앱에서는 스킬 목록의 토글로 켜고 끕니다.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="good-title">
+      <span class="section-label">잘 쓰는 법</span>
+      <h2 id="good-title">설명은 <em>구체적으로</em>,<br>본문은 짧고 분명하게</h2>
+      <div class="compare">
+        <article class="compare-card bad">
+          <span class="tag">아쉬운 description</span>
+          <blockquote>description: 문서 작업을 도와줍니다.</blockquote>
+          <p>어떤 문서인지, 언제 꺼내야 하는지 알 수 없습니다. 비슷한 스킬이 많으면 선택되지 않습니다.</p>
+        </article>
+        <article class="compare-card good">
+          <span class="tag">좋은 description</span>
+          <blockquote>description: PDF에서 글과 표를 뽑고 양식을 채운다. PDF 파일을 다루거나 사용자가 PDF, 양식, 문서 추출을 말할 때 사용한다.</blockquote>
+          <p>하는 일과 꺼낼 때를 모두 적었고, 사용자가 실제로 쓰는 낱말이 들어 있습니다.</p>
+        </article>
+      </div>
+      <div class="good-grid">
+        <article class="good-card">
+          <h3>잘 꺼내지게 쓰기</h3>
+          <ul>
+            <li>한 스킬에는 한 가지 일만 담습니다.</li>
+            <li>“무엇을 한다 + 언제 쓴다”를 3인칭으로 씁니다.</li>
+            <li>실제 요청 표현과 파일 형식 이름을 넣습니다.</li>
+          </ul>
+        </article>
+        <article class="good-card">
+          <h3>결과가 달라지게 쓰기</h3>
+          <ul>
+            <li>Claude가 이미 아는 설명은 빼고 이 일만의 규칙을 씁니다.</li>
+            <li>“예쁘게”보다 확인할 수 있는 기준과 예시를 적습니다.</li>
+            <li>마지막 확인 단계와, 틀리면 돌아갈 단계를 적습니다.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="repeat-grid" aria-label="자주 하는 실수">
+        <article class="repeat-card">
+          <small>자주 하는 실수 01</small>
+          <p>파일 경로를 <code>scripts\run.py</code>처럼 역슬래시로 씁니다. 항상 <code>scripts/run.py</code>처럼 슬래시를 씁니다.</p>
+        </article>
+        <article class="repeat-card">
+          <small>자주 하는 실수 02</small>
+          <p>참고 파일이 또 다른 파일을 가리키게 겹겹이 연결합니다. 모든 참고 파일은 SKILL.md에서 바로 연결합니다.</p>
+        </article>
+        <article class="repeat-card">
+          <small>자주 하는 실수 03</small>
+          <p>“8월 이후에는 새 방식을 써라”처럼 날짜에 묶인 지시를 넣습니다. 지금 쓰는 방법만 적어 둡니다.</p>
+        </article>
+      </div>
+      <aside class="boundary">
+        <strong>스킬이 권한까지 만들어 주지는 않습니다</strong>
+        <p>스킬은 ‘어떻게 일할지’를 알려 줄 뿐입니다. 메일, 드라이브, 데이터베이스에 접근하려면 커넥터나 MCP 연결과 사용자 권한이 따로 필요합니다. 스크립트가 들어 있는 스킬은 믿을 수 있는 곳에서 받은 것만 설치하고, 설치 전에 폴더 안 파일을 먼저 살펴보세요.</p>
+      </aside>
+    </section>
+
+    <p class="closing">SKILL.md는 어려운 코드가 아니라,<br>Claude가 필요할 때 꺼내 읽을 <em>내 업무 설명서 한 장</em>입니다.</p>
+
+    <footer class="sources">
+      <h2>확인한 공식 자료</h2>
+      <ul>
+        <li><a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview">Claude Docs — Agent Skills overview</a></li>
+        <li><a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices">Claude Docs — Skill authoring best practices</a></li>
+        <li><a href="https://code.claude.com/docs/en/skills">Claude Code Docs — Skills</a></li>
+        <li><a href="https://support.claude.com/en/articles/12512180-using-skills-in-claude">Claude Help Center — Using Skills in Claude</a></li>
+      </ul>
+      <p class="footer-note">Claude Skills · SKILL.md Beginner Visual Guide · 2026</p>
+    </footer>
+  </main>
+</body>
+</html>
