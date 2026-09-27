@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI 스킬이 무엇이고 어떻게 작동하며 어떻게 쓰는지 초보자에게 설명하는 색연필 그림 안내서">
+  <title>AI 스킬은 다시 쓰는 업무 설명서입니다</title>
+  <style>
+    :root {
+      --bg: #eceaf0;
+      --paper: #f8f5f7;
+      --card: #fffdf9;
+      --ink: #25232a;
+      --muted: #65626b;
+      --line: #cbc6cf;
+      --plum: #8f3456;
+      --blue: #355f82;
+      --ochre: #b47b19;
+      --green: #52735d;
+      --soft-plum: #eee0e6;
+      --soft-blue: #e3ebf1;
+      --soft-yellow: #f4e8c8;
+      --shadow: rgba(52, 42, 55, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255,255,255,.62) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 76% 62%, rgba(96,82,105,.05) 0 1px, transparent 1.5px),
+        var(--bg);
+      background-size: 19px 19px, 23px 23px, auto;
+      color: var(--ink);
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.85;
+      word-break: keep-all;
+    }
+
+    .page {
+      width: min(100% - 44px, 960px);
+      margin: 0 auto;
+      padding: 88px 0 64px;
+    }
+
+    header { padding-bottom: 70px; }
+
+    .kicker,
+    .section-label {
+      color: var(--plum);
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    .closing {
+      font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+      letter-spacing: -.045em;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 26px 0 30px;
+      font-size: clamp(47px, 7vw, 78px);
+      line-height: 1.12;
+      font-weight: 700;
+    }
+
+    h1 em,
+    h2 em,
+    .closing em { color: var(--plum); font-style: normal; }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 0;
+      color: #4f4b55;
+      font-size: 21px;
+      line-height: 1.85;
+    }
+
+    .hero-copy strong { color: var(--ink); }
+
+    .visual {
+      margin: 42px 0 0;
+    }
+
+    .pencil-frame {
+      overflow: hidden;
+      background: #f1eef5;
+      border: 1px solid #d3ccd7;
+      border-radius: 5px;
+      box-shadow: 0 14px 38px var(--shadow);
+    }
+
+    .pencil-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    figcaption,
+    .caption {
+      margin-top: 12px;
+      color: #817b85;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .section {
+      margin-top: 96px;
+      padding-top: 78px;
+      border-top: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 18px 0 25px;
+      font-size: clamp(36px, 5.2vw, 58px);
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .section-copy {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .repeat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .repeat-card {
+      min-height: 155px;
+      padding: 22px;
+      background: var(--card);
+      border: 1px dashed #aaa2ae;
+      border-radius: 6px 4px 7px 5px;
+      transform: rotate(-.35deg);
+    }
+
+    .repeat-card:nth-child(2) { transform: rotate(.45deg); }
+    .repeat-card:nth-child(3) { transform: rotate(-.15deg); }
+    .repeat-card small { color: var(--plum); font-weight: 800; }
+    .repeat-card p { margin: 13px 0 0; color: #4f4b55; font-size: 15px; }
+
+    .folder-labels {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .folder-label {
+      padding: 13px 10px;
+      background: rgba(255,255,255,.58);
+      border-bottom: 3px solid var(--blue);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .folder-label:nth-child(2) { border-color: var(--green); }
+    .folder-label:nth-child(3) { border-color: var(--plum); }
+    .folder-label:nth-child(4) { border-color: var(--ochre); }
+
+    .folder-label span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .truth-note {
+      margin-top: 24px;
+      padding: 18px 20px;
+      background: var(--soft-yellow);
+      border-left: 4px solid var(--ochre);
+      color: #5a4a2f;
+      font-size: 14px;
+    }
+
+    .flow-labels {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .flow-label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .flow-label span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 38px;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+
+    .how-card { min-height: 238px; padding: 28px 24px; }
+    .how-card + .how-card { border-left: 1px solid var(--line); }
+    .how-card b { color: var(--plum); font-size: 12px; letter-spacing: .08em; }
+    .how-card h3 { margin: 12px 0 12px; font-size: 19px; line-height: 1.5; }
+    .how-card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    code {
+      padding: .13em .38em;
+      background: #ece8ed;
+      color: #5d3850;
+      border-radius: 4px;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: .92em;
+    }
+
+    .good-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 36px;
+    }
+
+    .good-card {
+      padding: 28px;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+
+    .good-card h3 { margin: 0 0 14px; font-size: 20px; }
+    .good-card ul { margin: 0; padding-left: 1.2rem; color: var(--muted); }
+    .good-card li + li { margin-top: 10px; }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .skill-card {
+      padding: 23px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid var(--line);
+    }
+
+    .skill-card code { color: var(--blue); font-weight: 800; }
+    .skill-card h3 { margin: 12px 0 7px; font-size: 18px; }
+    .skill-card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .boundary {
+      margin-top: 42px;
+      padding: 25px 28px;
+      background: var(--soft-plum);
+      border-left: 4px solid var(--plum);
+    }
+
+    .boundary strong { display: block; margin-bottom: 7px; }
+    .boundary p { margin: 0; color: #5d4d56; font-size: 15px; }
+
+    .closing {
+      margin: 105px 0 66px;
+      padding: 50px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      font-size: clamp(34px, 5vw, 55px);
+      line-height: 1.28;
+      font-weight: 700;
+    }
+
+    .sources {
+      color: #77717c;
+      font-size: 13px;
+    }
+
+    .sources h2 {
+      margin: 0 0 12px;
+      font-family: inherit;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    .sources ul { margin: 0; padding-left: 1.15rem; }
+    .sources li + li { margin-top: 5px; }
+    .sources a { color: var(--blue); }
+    .footer-note { margin-top: 26px; font-size: 10px; }
+
+    @media (max-width: 720px) {
+      body { font-size: 16px; }
+      .page { width: min(100% - 28px, 560px); padding-top: 52px; }
+      header { padding-bottom: 45px; }
+      h1 { margin-top: 20px; font-size: 44px; }
+      .hero-copy, .section-copy { font-size: 16px; }
+      .section { margin-top: 58px; padding-top: 50px; }
+      .repeat-grid, .how-grid, .good-grid, .skill-grid { grid-template-columns: 1fr; }
+      .how-card + .how-card { border-left: 0; border-top: 1px solid var(--line); }
+      .folder-labels { grid-template-columns: repeat(2, 1fr); }
+      .flow-labels { gap: 2px; }
+      .flow-label { font-size: 10px; }
+      .flow-label span { font-size: 8px; }
+      .closing { margin-top: 64px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { width: 100%; padding: 12mm; }
+      .section, .closing { break-before: auto; }
+      .pencil-frame, .repeat-grid, .how-grid, .good-grid, .skill-grid, .boundary { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="kicker">AI Skills · 다시 쓰는 업무 설명서</p>
+      <h1>매번 다시 말하지 않게<br>AI에게 <em>일하는 방법</em>을 적어두세요</h1>
+      <p class="hero-copy">스킬은 <strong>“이런 일을 부탁받으면, 이 순서와 기준으로 처리해”</strong>라고 적어 둔 재사용 설명서입니다. 일이 시작되면 AI가 필요한 설명서를 읽고 그 방식대로 움직입니다.</p>
+      <figure class="visual">
+        <div class="pencil-frame">
+          <img src="skills-colored-pencil-hero.png" alt="사람이 업무 방법을 카드에 적어 서랍에 넣고, AI 로봇이 필요한 카드를 꺼내 일하는 색연필 그림">
+        </div>
+        <figcaption>한 번 정리해 둔 업무 방식을 다음 요청에서도 다시 사용할 수 있습니다.</figcaption>
+      </figure>
+    </header>
+
+    <section class="section" aria-labelledby="problem-title">
+      <span class="section-label">왜 필요한가</span>
+      <h2 id="problem-title">같은 부탁 뒤에<br><em>같은 설명</em>이 따라붙습니다</h2>
+      <p class="section-copy">발표자료를 만들 때마다 글꼴, 분량, 출처, 검수 방법을 다시 말하면 길어지고 빠뜨리기 쉽습니다. 반복되는 설명을 스킬로 묶어 두면 요청은 짧아지고 결과의 기준은 일정해집니다.</p>
+      <div class="repeat-grid" aria-label="반복해서 말하던 규칙 예시">
+        <article class="repeat-card">
+          <small>매번 붙이던 말 01</small>
+          <p>숫자가 나오면 믿을 만한 출처부터 확인해 줘.</p>
+        </article>
+        <article class="repeat-card">
+          <small>매번 붙이던 말 02</small>
+          <p>한 장에는 중요한 메시지 하나만 남겨 줘.</p>
+        </article>
+        <article class="repeat-card">
+          <small>매번 붙이던 말 03</small>
+          <p>완성한 뒤 화면이 깨지지 않았는지 직접 확인해 줘.</p>
+        </article>
+      </div>
+      <p class="caption">같은 규칙을 여러 번 설명하고 있다면, 스킬로 만들기 좋은 일입니다.</p>
+    </section>
+
+    <section class="section" aria-labelledby="inside-title">
+      <span class="section-label">무엇이 들어 있나</span>
+      <h2 id="inside-title">중심은 글로 쓴 설명서,<br>필요하면 <em>도구 상자</em>도 붙습니다</h2>
+      <p class="section-copy">스킬은 폴더 하나입니다. 꼭 필요한 것은 이름, 언제 쓸지, 어떻게 일할지를 적은 <code>SKILL.md</code>입니다. 작업에 따라 참고자료, 서식, 이미지, 실행 스크립트를 함께 둘 수 있습니다.</p>
+      <figure class="visual">
+        <div class="pencil-frame">
+          <img src="skills-colored-pencil-kit.png" alt="AI 로봇이 큰 폴더를 열어 업무 설명서, 참고 책, 서식 종이, 톱니바퀴 도구 상자를 보여주는 색연필 그림">
+        </div>
+        <div class="folder-labels" aria-label="스킬 폴더 구성">
+          <div class="folder-label">SKILL.md<span>핵심 설명서 · 필수</span></div>
+          <div class="folder-label">references<span>참고자료 · 선택</span></div>
+          <div class="folder-label">assets<span>서식과 재료 · 선택</span></div>
+          <div class="folder-label">scripts<span>반복 실행 · 선택</span></div>
+        </div>
+        <figcaption>스킬마다 필요한 만큼만 담습니다. 모든 스킬에 스크립트가 필요한 것은 아닙니다.</figcaption>
+      </figure>
+      <aside class="truth-note"><strong>중요한 차이:</strong> 스킬은 AI 모델을 다시 훈련하는 기능이 아닙니다. 일을 시작할 때 읽는 설명서와 재료를 잘 정리해 두는 방식입니다.</aside>
+    </section>
+
+    <section class="section" aria-labelledby="flow-title">
+      <span class="section-label">어떻게 작동하나</span>
+      <h2 id="flow-title">먼저 짧은 소개를 보고,<br>맞는 스킬만 <em>펼쳐 읽습니다</em></h2>
+      <p class="section-copy">Codex는 처음부터 모든 스킬의 긴 본문을 읽지 않습니다. 먼저 설치된 스킬의 이름과 설명을 보고, 사용자의 요청과 맞는 스킬을 골랐을 때 그 스킬의 <code>SKILL.md</code>와 필요한 자료를 읽습니다.</p>
+      <figure class="visual">
+        <div class="pencil-frame">
+          <img src="skills-colored-pencil-flow.png" alt="사용자가 부탁하면 AI 로봇이 여러 카드의 짧은 소개를 살펴보고 알맞은 카드 하나만 펼쳐 읽은 뒤 컴퓨터로 일하는 색연필 그림">
+        </div>
+        <div class="flow-labels" aria-label="스킬이 선택되어 실행되는 순서">
+          <div class="flow-label">사용자 요청<span>하고 싶은 일</span></div>
+          <div class="flow-label">설명 확인<span>어떤 스킬이 맞나</span></div>
+          <div class="flow-label">한 개 펼치기<span>전체 지침 읽기</span></div>
+          <div class="flow-label">작업 수행<span>정해 둔 방식 적용</span></div>
+        </div>
+        <figcaption>스킬이 많아도 매번 전부 펼치는 방식은 아닙니다. 그래서 ‘언제 쓰는지’를 적은 설명이 중요합니다.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="use-title">
+      <span class="section-label">어떻게 부르나</span>
+      <h2 id="use-title">두 가지로 부르고,<br>필요하면 <em>빼달라</em>고 말합니다</h2>
+      <div class="how-grid">
+        <article class="how-card">
+          <b>01 · 알아서 선택</b>
+          <h3>평소처럼 일을 부탁합니다</h3>
+          <p>요청이 스킬의 설명과 잘 맞으면 Codex가 알맞은 스킬을 고를 수 있습니다.<br><br>예: “MCP를 초보자용 그림 설명서로 만들어줘.”</p>
+        </article>
+        <article class="how-card">
+          <b>02 · 직접 지목</b>
+          <h3><code>$스킬이름</code>으로 부릅니다</h3>
+          <p>이번 작업에 특정 스킬을 꼭 쓰고 싶다면 이름을 직접 적습니다.<br><br>예: <code>$eli5 스킬이 무엇인지 설명해줘</code></p>
+        </article>
+        <article class="how-card">
+          <b>03 · 이번에는 제외</b>
+          <h3>쓰지 말라고 분명히 말합니다</h3>
+          <p>간단한 초안만 필요하거나 특정 방식이 맞지 않을 때는 제외할 수 있습니다.<br><br>예: “이번에는 스킬 없이 글만 빠르게 써줘.”</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="good-title">
+      <span class="section-label">잘 만드는 법</span>
+      <h2 id="good-title">좋은 스킬은 넓지 않고,<br><em>판단할 수 있게</em> 씁니다</h2>
+      <div class="good-grid">
+        <article class="good-card">
+          <h3>잘 꺼내지게 만들기</h3>
+          <ul>
+            <li>한 스킬에는 한 가지 일을 담습니다.</li>
+            <li>설명에 실제로 쓰는 요청 표현을 넣습니다.</li>
+            <li>언제 쓰고 언제 쓰지 않을지 범위를 적습니다.</li>
+          </ul>
+        </article>
+        <article class="good-card">
+          <h3>결과가 달라지게 만들기</h3>
+          <ul>
+            <li>“예쁘게”보다 확인 가능한 기준을 적습니다.</li>
+            <li>입력, 작업 순서, 최종 결과를 분명히 씁니다.</li>
+            <li>필요한 검수 방법과 멈출 조건을 넣습니다.</li>
+          </ul>
+        </article>
+      </div>
+      <p class="caption">같은 요구를 세 번째 설명하고 있다면 “이 규칙을 스킬로 만들어줘”라고 부탁해도 좋습니다.</p>
+    </section>
+
+    <section class="section" aria-labelledby="examples-title">
+      <span class="section-label">지금 쓰는 예</span>
+      <h2 id="examples-title">스킬 하나가<br><em>한 가지 전문 역할</em>을 맡습니다</h2>
+      <div class="skill-grid">
+        <article class="skill-card">
+          <code>$eli5</code>
+          <h3>어려운 개념을 그림 설명서로</h3>
+          <p>자료를 확인하고, 초보자가 읽기 쉬운 HTML 설명서로 정리합니다.</p>
+        </article>
+        <article class="skill-card">
+          <code>$handdrawn-ppt</code>
+          <h3>손그림 발표자료 만들기</h3>
+          <p>캐릭터와 손그림 화풍을 맞춘 PPT나 카드뉴스를 제작합니다.</p>
+        </article>
+        <article class="skill-card">
+          <code>$notebooklm</code>
+          <h3>여러 자료를 한곳에서 다루기</h3>
+          <p>출처를 모아 요약하고 오디오 같은 학습 자료를 만듭니다.</p>
+        </article>
+        <article class="skill-card">
+          <code>$openai-docs</code>
+          <h3>공식 OpenAI 문서부터 확인하기</h3>
+          <p>Codex나 OpenAI 기능을 설명할 때 최신 공식 자료를 먼저 찾습니다.</p>
+        </article>
+      </div>
+      <aside class="boundary">
+        <strong>스킬이 권한까지 만들어 주는 것은 아닙니다</strong>
+        <p>스킬은 ‘어떻게 일할지’를 알려 줍니다. 메일, 드라이브, 데이터베이스 같은 외부 서비스에 접근하려면 별도의 도구나 MCP 연결과 사용자 권한이 필요합니다.</p>
+      </aside>
+    </section>
+
+    <p class="closing">스킬은 AI에게 모든 것을 새로 가르치는 기능이 아니라,<br>필요한 순간에 <em>내 업무 설명서를 꺼내 읽게 하는 방법</em>입니다.</p>
+
+    <footer class="sources">
+      <h2>확인한 공식 자료</h2>
+      <ul>
+        <li><a href="https://developers.openai.com/codex/skills">OpenAI Docs — Build skills</a></li>
+        <li><a href="https://developers.openai.com/api/docs/guides/latest-model">OpenAI Docs — Model guidance와 스킬 지침</a></li>
+      </ul>
+      <p class="footer-note">AI Skills · Beginner Visual Guide · 2026</p>
+    </footer>
+  </main>
+</body>
+</html>
